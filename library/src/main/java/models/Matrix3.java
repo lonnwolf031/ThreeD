@@ -1,11 +1,19 @@
 package models;
 
-class Matrix3 {
+public class Matrix3 {
     double[] values;
-    Matrix3(double[] values) {
+    public Matrix3(double[] values) {
         this.values = values;
     }
-    Matrix3 multiply(Matrix3 other) {
+
+    /*
+     *    ┌─                    ─┐
+     *    │   cos θ  -sin θ   0  │
+     * XY │   sin θ   cos θ   0  │
+     *    │     0       0     1  │
+     *    └─                    ─┘
+     */
+    public Matrix3 multiply(Matrix3 other) {
         double[] result = new double[9];
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
@@ -17,7 +25,7 @@ class Matrix3 {
         }
         return new Matrix3(result);
     }
-    Vertex transform(Vertex in) {
+    public Vertex transform(Vertex in) {
         return new Vertex(
                 in.x * values[0] + in.y * values[3] + in.z * values[6],
                 in.x * values[1] + in.y * values[4] + in.z * values[7],
