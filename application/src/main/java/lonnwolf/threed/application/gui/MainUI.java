@@ -18,13 +18,33 @@ public class MainUI {
         Container pane = frame.getContentPane();
         pane.setLayout(new BorderLayout());
 
+        var renderPanel = renderPanel();
+        var panel = new JPanel();
+
+
+        //Create a split pane with the two scroll panes in it.
+        var splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                 panel, renderPanel);
+
+       // pane.add(renderPanel, BorderLayout.CENTER);
+        pane.add(splitPane);
+
+
+
+        frame.setSize(400, 400);
+        return frame;
+    }
+
+    private static JPanel renderPanel() {
+        JPanel pane = new JPanel();
+
         // slider to control horizontal rotation
         JSlider headingSlider = new JSlider(-180, 180, 0);
-        pane.add(headingSlider, BorderLayout.SOUTH);
+
 
         // slider to control vertical rotation
         JSlider pitchSlider = new JSlider(SwingConstants.VERTICAL, -90, 90, 0);
-        pane.add(pitchSlider, BorderLayout.EAST);
+
 
         // panel to display render results
         JPanel renderPanel = new JPanel() {
@@ -130,13 +150,28 @@ public class MainUI {
                 g2.drawImage(img, 0, 0, null);
             }
         };
-        pane.add(renderPanel, BorderLayout.CENTER);
+        renderPanel.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                double yi = 180.0 / renderPanel.getHeight();
+                double xi = 180.0 / renderPanel.getWidth();
+                x[0] = (int) (e.getX() * xi);
+                y[0] = -(int) (e.getY() * yi);
+                renderPanel.repaint();
+            }
 
+            @Override
+            public void mouseMoved(MouseEvent e) {
+
+            }
+        });
+        renderPanel.setSize(200,200);
+        pane.add(renderPanel, BorderLayout.CENTER);
+        pane.add(pitchSlider, BorderLayout.EAST);
+        pane.add(headingSlider, BorderLayout.SOUTH);
         headingSlider.addChangeListener(e -> renderPanel.repaint());
         pitchSlider.addChangeListener(e -> renderPanel.repaint());
-
-        frame.setSize(400, 400);
-        return frame;
+        return pane;
     }
 
     public static Color getShade(Color color, double shade) {

@@ -5,9 +5,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.WebApplicationType;
 
 @SpringBootApplication(scanBasePackages = "lonnwolf.threed")
-public class ThreeDApplication {
+public class ThreeD {
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(ThreeDApplication.class)
+		new SpringApplicationBuilder(ThreeD.class)
 				.headless(false)
 				.web(WebApplicationType.NONE)
 				.run(args);
