@@ -1,5 +1,6 @@
 package lonnwolf.threed.application.gui;
 
+import lonnwolf.threed.application.gui.views.RenderView;
 import lonnwolf.threed.models.Matrix3;
 import lonnwolf.threed.models.Triangle;
 import lonnwolf.threed.models.Vertex;
@@ -12,34 +13,38 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class MainUI {
+public class MainUI implements RenderView {
 
     private static Renderer renderer = new Renderer();
-    public static JFrame mainFrame() {
+    private JPanel renderPanel;
+    private JFrame mainFrame;
 
+    public MainUI() {
+        this.renderPanel = getRenderPanel();
+        this.mainFrame = new JFrame();
+        this.mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        JFrame frame = new JFrame();
-        Container pane = frame.getContentPane();
+        Container pane =  this.mainFrame.getContentPane();
         pane.setLayout(new BorderLayout());
 
-        var renderPanel = renderPanel();
         var panel = new JPanel();
 
 
         //Create a split pane with the two scroll panes in it.
         var splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                 panel, renderPanel);
+                panel, renderPanel);
 
-       // pane.add(renderPanel, BorderLayout.CENTER);
+        // pane.add(renderPanel, BorderLayout.CENTER);
         pane.add(splitPane);
+        this.mainFrame.setSize(400, 400);
 
-
-
-        frame.setSize(400, 400);
-        return frame;
     }
 
-    private static JPanel renderPanel() {
+    public JFrame getMainFrame() {
+        return  this.mainFrame;
+    }
+
+    private JPanel getRenderPanel() {
         JPanel pane = new JPanel();
 
 
@@ -196,4 +201,8 @@ public class MainUI {
         return new Color(red, green, blue);
     }
 
+    @Override
+    public void setImage(BufferedImage image) {
+
+    }
 }

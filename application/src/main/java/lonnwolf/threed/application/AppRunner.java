@@ -22,6 +22,9 @@ public class AppRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         //This boots up the GUI.
-        EventQueue.invokeLater(() -> MainUI.mainFrame().setVisible(true));
+        EventQueue.invokeLater(() -> {
+            var mainUI = new MainUI();
+            mainUI.getMainFrame().setVisible(true);
+        });
     }
 }
