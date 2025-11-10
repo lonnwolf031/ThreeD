@@ -1,8 +1,9 @@
 package lonnwolf.threed.application.gui;
 
-import models.Matrix3;
-import models.Triangle;
-import models.Vertex;
+import lonnwolf.threed.models.Matrix3;
+import lonnwolf.threed.models.Triangle;
+import lonnwolf.threed.models.Vertex;
+import lonnwolf.threed.service.Renderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,10 @@ import java.util.ArrayList;
 
 public class MainUI {
 
+    private static Renderer renderer = new Renderer();
     public static JFrame mainFrame() {
+
+
         JFrame frame = new JFrame();
         Container pane = frame.getContentPane();
         pane.setLayout(new BorderLayout());
@@ -37,6 +41,7 @@ public class MainUI {
 
     private static JPanel renderPanel() {
         JPanel pane = new JPanel();
+
 
         // slider to control horizontal rotation
         JSlider headingSlider = new JSlider(-180, 180, 0);
@@ -71,6 +76,9 @@ public class MainUI {
                         new Vertex(-100, -100, 100),
                         Color.BLUE));
 
+                var img = renderer.DrawTriangles(tris, getWidth(),getHeight());
+
+                /*
                 for (int i = 0; i < 4; i++) {
                     tris = Triangle.inflate(tris);
                 }
@@ -147,6 +155,8 @@ public class MainUI {
 
                 }
 
+*/
+
                 g2.drawImage(img, 0, 0, null);
             }
         };
@@ -155,8 +165,8 @@ public class MainUI {
             public void mouseDragged(MouseEvent e) {
                 double yi = 180.0 / renderPanel.getHeight();
                 double xi = 180.0 / renderPanel.getWidth();
-                x[0] = (int) (e.getX() * xi);
-                y[0] = -(int) (e.getY() * yi);
+             //   x[0] = (int) (e.getX() * xi);
+             //   y[0] = -(int) (e.getY() * yi);
                 renderPanel.repaint();
             }
 
@@ -171,7 +181,7 @@ public class MainUI {
         pane.add(headingSlider, BorderLayout.SOUTH);
         headingSlider.addChangeListener(e -> renderPanel.repaint());
         pitchSlider.addChangeListener(e -> renderPanel.repaint());
-        return pane;
+        return renderPanel;
     }
 
     public static Color getShade(Color color, double shade) {

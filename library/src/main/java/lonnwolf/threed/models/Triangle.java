@@ -1,4 +1,4 @@
-package models;
+package lonnwolf.threed.models;
 
 import java.awt.*;
 import java.util.ArrayList;

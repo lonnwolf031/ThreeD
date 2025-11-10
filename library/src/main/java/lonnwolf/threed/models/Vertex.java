@@ -1,4 +1,4 @@
-package models;
+package lonnwolf.threed.models;
 
 public class Vertex {
     public double x;

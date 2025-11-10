@@ -1,4 +1,4 @@
-package models;
+package lonnwolf.threed.models;
 
 public class Matrix3 {
     double[] values;
@@ -25,6 +25,25 @@ public class Matrix3 {
         }
         return new Matrix3(result);
     }
+
+    public static Matrix3 headingTransform(double headingDegrees) {
+        double heading = Math.toRadians(headingDegrees);
+        return new Matrix3(new double[] {
+                Math.cos(heading), 0, -Math.sin(heading),
+                0, 1, 0,
+                Math.sin(heading), 0, Math.cos(heading)
+        });
+    }
+
+    public static Matrix3 pitchTransForm(double pitchDegrees) {
+        double pitch = Math.toRadians(pitchDegrees);
+        return new Matrix3(new double[] {
+                1, 0, 0,
+                0, Math.cos(pitch), Math.sin(pitch),
+                0, -Math.sin(pitch), Math.cos(pitch)
+        });
+    }
+
     public Vertex transform(Vertex in) {
         return new Vertex(
                 in.x * values[0] + in.y * values[3] + in.z * values[6],
